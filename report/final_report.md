@@ -38,3 +38,5 @@ This workflow automates the discovery, scoring, and prioritization of Upwork job
 - Deduplication via job UID
 - Historical scoring trends
 - Cost optimization using job budget
+
+Video Link: https://drive.google.com/file/d/1Xw9PAU7GL4fbZcBfEy-B6P31vsfmkBKh/view?usp=drive_link
