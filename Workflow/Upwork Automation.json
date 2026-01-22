@@ -732,18 +732,17 @@
     },
     "Loop Over Items": {
       "main": [
-        [
-          {
-            "node": "Wait1",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "Merge",
             "type": "main",
             "index": 1
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -780,7 +779,7 @@
     "saveDataErrorExecution": "all",
     "callerPolicy": "workflowsFromSameOwner"
   },
-  "versionId": "214b34b4-3258-4291-95a2-c74f8a88a846",
+  "versionId": "f296dfe5-beb0-4b01-8b37-6b18640b870a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3cb7bb455a7b489f23a2b89fe654a70269452b7e76b096aa30ce474ef6c32033"
