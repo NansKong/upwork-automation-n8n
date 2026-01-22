@@ -1,0 +1,790 @@
+{
+  "name": "Upwork Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/upwork-vibe~upwork-scraper/run-sync-get-dataset-items",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "{\n  \"includeKeywords.keywords\": [\"n8n\"],\n  \"includeKeywords.matchTitle\": true,\n  \"includeKeywords.matchDescription\": true,\n  \"includeKeywords.matchSkills\": true,\n  \"limit\": 10\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        96
+      ],
+      "id": "0a271ccb-d333-4cf7-a593-c1ff6ba88654",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "MAUeSgy4MPjg3gGl",
+          "name": "Apify API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dbd4dbbe-4f44-4db6-b155-534e848b13a9",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "1e6372fe-feb6-4f6b-bd21-5d78bf26b4b7",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "f487bf4c-eece-435e-8ac4-39028cb262fe",
+              "name": "url",
+              "value": "={{ $json.externalLink }}",
+              "type": "string"
+            },
+            {
+              "id": "7d870236-fdbb-4382-bafd-9da2cfcd07aa",
+              "name": "relativeDate",
+              "value": "={{ $json.createdAt }}",
+              "type": "string"
+            },
+            {
+              "id": "f7d6d248-2193-4684-8406-5b112a145abf",
+              "name": "experienceLevel",
+              "value": "={{ $json.vendor.experienceLevel }}",
+              "type": "string"
+            },
+            {
+              "id": "0d08a144-9edf-4745-8489-4350976cb5f0",
+              "name": "Skills",
+              "value": "={{$json.skills.join(', ')}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        96
+      ],
+      "id": "ec9bb569-8877-4a0f-a23f-e061775b0384",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appIUenkGDH9hflYv",
+          "mode": "list",
+          "cachedResultName": "Upwork Automation",
+          "cachedResultUrl": "https://airtable.com/appIUenkGDH9hflYv"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblDjJn2PLlQE9Czu",
+          "mode": "list",
+          "cachedResultName": "Upwork Leads",
+          "cachedResultUrl": "https://airtable.com/appIUenkGDH9hflYv/tblDjJn2PLlQE9Czu"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Description": "={{$json.description}}",
+            "URL": "={{$json.url}}",
+            "Score": "={{ Number($json.score) }}",
+            "Priority": "={{$json.priority}}",
+            "Job Title": "={{ $json.title }}",
+            "Reasoning": "={{$json.reasoning}}",
+            "Experience": "={{ $json.experienceLevel }}",
+            "Created At": "={{ $json.relativeDate }}",
+            "Skills": "={{ $json.skills }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "High",
+                  "value": "High"
+                },
+                {
+                  "name": "Medium",
+                  "value": "Medium"
+                },
+                {
+                  "name": "Low",
+                  "value": "Low"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Reasoning",
+              "displayName": "Reasoning",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Experience",
+              "displayName": "Experience",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created At",
+              "displayName": "Created At",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Skills",
+              "displayName": "Skills",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        2784,
+        256
+      ],
+      "id": "025e3bbc-a3b1-4c4c-acf3-ba25400981b1",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "BN5oIug7MWxCnub9",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Upwork Automation",
+        "height": 624,
+        "width": 2960,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "8efb3011-5619-4e90-91eb-3d7333860ad7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        16,
+        96
+      ],
+      "id": "78bf259f-6917-4ebb-ac07-c865f5cf4094",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.replicate.com/v1/predictions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{$json.replicateBody}}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 10,
+              "batchInterval": 2000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1552,
+        64
+      ],
+      "id": "ef679470-4f94-4148-80c5-89058e119d2b",
+      "name": "Replicate – Create Prediction",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "b7pOxznq9OXqDwhS",
+          "name": "Replicate API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "27fa7705-9978-48bf-8cd3-b310c658ebcb",
+              "leftValue": "experienceLevel",
+              "rightValue": "Entry",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "099e969c-be0f-43b5-9642-c36c019bcda2",
+              "leftValue": "description",
+              "rightValue": "automation",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "c51f2042-035e-47b8-abd3-b2f6dd6ca88d",
+              "leftValue": "description",
+              "rightValue": "API",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "5dda189a-23de-4e1b-94e0-bfb9a5728d78",
+              "leftValue": "description",
+              "rightValue": "AI",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "876f7b16-7db4-4005-9e6b-0824b0d59e4e",
+              "leftValue": "description",
+              "rightValue": "workflow",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1136,
+        80
+      ],
+      "id": "71aba670-133b-4754-b010-d4644faef248",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "const prompt = `\nYou are an expert automation consultant specializing in n8n, Zapier, Make, APIs, and AI workflows.\n\nYour task is to evaluate whether the following Upwork job is a GOOD FIT for an automation-focused freelancer.\n\nScore the job from 1 to 10 based on:\n- Relevance to automation, AI, APIs, or workflow systems\n- Skill alignment with automation tools\n- Seniority implied by experience level\n- Overall quality and seriousness of the job\n\nReturn ONLY valid JSON in this format:\n{\n  \"score\": number,\n  \"priority\": \"High\" | \"Medium\" | \"Low\",\n  \"reasoning\": \"1–2 sentences explaining the score\"\n}\n\nJob Information:\nTitle: ${$json.title}\nDescription: ${$json.description}\nExperience Level: ${$json.experienceLevel}\nSkills: ${$json.Skills}\nPosted At (ISO): ${$json.relativeDate}\n\nScoring Rules:\n- High priority → strong automation relevance + solid experience\n- Medium priority → partial automation relevance\n- Low priority → weak or unrelated to automation\n`;\n\nreturn [\n  {\n    json: {\n      replicateBody: {\n        version: \"openai/gpt-4.1-mini\",\n        input: {\n          prompt\n        }\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1344,
+        64
+      ],
+      "id": "e99a987d-8ea9-4433-91c1-cba17e51a4b4",
+      "name": "Build Replicate Payload"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1760,
+        64
+      ],
+      "id": "13ff4cd5-53dd-4ca8-b2f5-a7aa7159433d",
+      "name": "Wait",
+      "webhookId": "6b26e1e7-fe3f-40fa-8214-61e25407856f"
+    },
+    {
+      "parameters": {
+        "url": "={{$json.urls.get}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1984,
+        64
+      ],
+      "id": "5fb03d0c-9dca-4215-af11-a91ddef130b0",
+      "name": "Replicate – Get Result",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "b7pOxznq9OXqDwhS",
+          "name": "Replicate API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let raw = Array.isArray($json.output)\n  ? $json.output.join(\"\")\n  : String($json.output || \"\");\n\nraw = raw\n  .replace(/```json/gi, \"\")\n  .replace(/```/g, \"\")\n  .trim();\n\nlet parsed;\ntry {\n  parsed = JSON.parse(raw);\n} catch (e) {\n  throw new Error(\"AI output is not valid JSON:\\n\" + raw);\n}\n\nreturn [\n  {\n    json: {\n      uid: $json.uid,\n      title: $json.title,\n      description: $json.description,\n      url: $json.externalLink || $json.url,\n      createdAt: $json.createdAt || $json.relativeDate,\n      experienceLevel: $json.experienceLevel,\n      skills: $json.Skills || $json.skills,\n\n      score: Number(parsed.score),\n      priority: parsed.priority,\n      reasoning: parsed.reasoning\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        64
+      ],
+      "id": "d4aa0c5d-9375-4149-8716-0e0113079982",
+      "name": "Parse AI Output",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bdcabfd2-d12b-497c-a08d-d47dc87c046f",
+              "leftValue": "priority",
+              "rightValue": "High",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2352,
+        368
+      ],
+      "id": "e2be512c-4c0d-4527-94fa-0fac3b295959",
+      "name": "High Priority"
+    },
+    {
+      "parameters": {
+        "fromEmail": "krudrax16@gmail.com",
+        "toEmail": "krudrax15@gmail.com",
+        "subject": "High-Priority Upwork Job Alert",
+        "html": "=High-Priority Job Found\n\nTitle: {{$json.title}}\nScore: {{$json.score}}\nPriority: {{$json.priority}}\n\nReason:\n{{$json.reasoning}}\n\nLink:\n{{$json.url}}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2544,
+        160
+      ],
+      "id": "195d2b2c-b2de-4fde-9b53-b6fb008f59ca",
+      "name": "Send email",
+      "webhookId": "16ae4963-5186-422c-a5fc-77214aac8ead",
+      "credentials": {
+        "smtp": {
+          "id": "b0ckFRZJqsDY4VZq",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combineBySql",
+        "query": "SELECT\n  input2.title,\n  input2.description,\n  input2.url,\n  input2.Skills AS skills,\n  input2.experienceLevel,\n  input2.relativeDate,\n\n  input1.score,\n  input1.priority,\n  input1.reasoning\nFROM input1\nJOIN input2\nON 1 = 1\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1920,
+        368
+      ],
+      "id": "087c5946-b005-4a0c-97da-5e8c9c9addf2",
+      "name": "Merge",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        752,
+        288
+      ],
+      "id": "a8f2b27e-153d-46ea-8084-e8cab6c272dd",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        80
+      ],
+      "id": "9233a502-43b2-46fa-85ce-18cf046bf220",
+      "name": "Wait1",
+      "webhookId": "d3a8c37e-2e9a-45f9-bb51-eae1b40bd139"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "995be081-d38c-4713-bc3c-d5447a958cb4",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "={{ DateTime.fromISO($json.relativeDate).diffNow('hours').hours >= -6 }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        96
+      ],
+      "id": "b2a6659b-5e68-4972-ba13-dd5972df554c",
+      "name": "6hours before"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "6hours before",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replicate – Create Prediction": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Build Replicate Payload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Build Replicate Payload": {
+      "main": [
+        [
+          {
+            "node": "Replicate – Create Prediction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Replicate – Get Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replicate – Get Result": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Output": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "High Priority": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "High Priority",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6hours before": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Kolkata",
+    "saveDataErrorExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "214b34b4-3258-4291-95a2-c74f8a88a846",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3cb7bb455a7b489f23a2b89fe654a70269452b7e76b096aa30ce474ef6c32033"
+  },
+  "id": "BBFbeNXmEgr22VZ-6mmeh",
+  "tags": []
+}
