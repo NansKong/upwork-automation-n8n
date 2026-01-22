@@ -1,7 +1,7 @@
 ## Setup Instructions
 
 ### Prerequisites
-- Docker & Docker Compose
+- Docker Desktop
 - n8n v2.4.4
 - Apify API Key
 - Replicate API Token
@@ -14,3 +14,4 @@ docker run -it --rm --name n8n \
   -p 5678:5678 \
   -v ${HOME}\.n8n:/home/node/.n8n \
   n8nio/n8n
+
